@@ -786,3 +786,12 @@ showScene("main");
 updatePlayerSprite();
 
 movePlayer();
+
+function goCertificate() {
+
+    window.open(
+        "https://parkbab.github.io/marine-safety2/",
+        "_blank"
+    );
+
+}
