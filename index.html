@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SAFE SEA</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<div id="game">
+
+
+    <!-- ========================= -->
+    <!-- 메인 화면 -->
+    <!-- ========================= -->
+
+    <section
+        id="mainMenu"
+        class="scene active"
+    >
+
+        <img
+            src="images/main.png"
+            class="scene-background"
+            alt="메인 화면"
+        >
+
+        <button
+            id="startBtn"
+            class="invisible-button start-button"
+            aria-label="게임 시작"
+        ></button>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- 맵 선택 -->
+    <!-- ========================= -->
+
+    <section
+        id="mapSelect"
+        class="scene"
+    >
+
+        <div class="map-select-panel">
+
+            <h1>
+                어디에서 활동할까요?
+            </h1>
+
+
+            <div class="map-buttons">
+
+
+                <button
+                    id="dockBtn"
+                    class="map-button"
+                >
+
+                    <span class="map-icon">
+                        🎣
+                    </span>
+
+                    <strong>
+                        선착장
+                    </strong>
+
+                    <small>
+                        배를 타고 먼 바다로
+                        낚시를 떠나요.
+                    </small>
+
+                </button>
+
+
+
+                <button
+                    id="beachBtn"
+                    class="map-button"
+                >
+
+                    <span class="map-icon">
+                        🏖️
+                    </span>
+
+                    <strong>
+                        해수욕장
+                    </strong>
+
+                    <small>
+                        해수욕과 수상 레저를
+                        즐겨요.
+                    </small>
+
+                </button>
+
+
+            </div>
+
+
+            <button
+                id="backToMain"
+                class="wood-button"
+            >
+
+                돌아가기
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- 선착장 -->
+    <!-- ========================= -->
+
+    <section
+        id="dockScene"
+        class="scene game-map"
+    >
+
+        <img
+            src="images/dock.png"
+            class="scene-background"
+            alt="선착장"
+        >
+
+
+        <div
+            class="player"
+            id="dockPlayer"
+        ></div>
+
+
+        <button
+            class="invisible-button equipment-button"
+            aria-label="장비"
+        ></button>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- 해수욕장 -->
+    <!-- ========================= -->
+
+    <section
+        id="beachScene"
+        class="scene game-map"
+    >
+
+        <img
+            src="images/beach.png"
+            class="scene-background"
+            alt="해수욕장"
+        >
+
+
+        <div
+            class="player"
+            id="beachPlayer"
+        ></div>
+
+
+        <button
+            class="invisible-button equipment-button"
+            aria-label="장비"
+        ></button>
+
+    </section>
+
+
+
+    <!-- ========================= -->
+    <!-- 인벤토리 -->
+    <!-- ========================= -->
+
+    <div id="inventoryPanel">
+
+        <div class="inventory-header">
+
+            <span>
+                INVENTORY
+            </span>
+
+
+            <button id="inventoryCloseBtn">
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="inventory-tab">
+            장비
+        </div>
+
+
+        <div id="inventoryGrid">
+
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+            <div class="inventory-slot"></div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- 상호작용 안내 -->
+    <!-- ========================= -->
+
+    <div id="interactionGuide">
+
+        <span id="interactionKey">
+            E
+        </span>
+
+        <span id="interactionText">
+            조사
+        </span>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- 대화창 -->
+    <!-- ========================= -->
+
+    <div id="dialogueBox">
+
+        <div id="dialogueName">
+            안내
+        </div>
+
+
+        <div id="dialogueText">
+
+            대화 내용
+
+        </div>
+
+
+        <button id="dialogueCloseBtn">
+
+            확인
+
+        </button>
+
+    </div>
+
+<div id="accidentScene" class="result-scene">
+    <h1 id="accidentTitle">사고 발생!</h1>
+    <p id="accidentText">예상치 못한 상황이 발생했습니다.</p>
+</div>
+
+<div id="failScene" class="result-scene">
+    <h1>안전하게 활동하지 못했습니다.</h1>
+    <p>
+        예기치 못한 사고는 언제든 발생할 수 있습니다.<br>
+        구명조끼는 생명을 지키는 가장 중요한 안전장비입니다.
+    </p>
+    <p class="hint">선착장이나 대여소를 조금 더 둘러보세요.</p>
+    <button onclick="returnToMap()">다시 준비하기</button>
+</div>
+
+<div id="clearScene" class="result-scene">
+    <h1>MISSION CLEAR!</h1>
+    <p>
+        구명조끼 덕분에 물 위에 떠 있을 수 있었습니다.<br>
+        구조대가 도착해 안전하게 구조되었습니다!
+    </p>
+    <button onclick="showScene('mapSelect')">다음으로</button>
+</div>
+
+
+    <!-- ========================= -->
+    <!-- 모바일 이동 -->
+    <!-- ========================= -->
+
+    <div id="mobileControls">
+
+        <button id="leftBtn">
+            ◀
+        </button>
+
+
+        <button id="rightBtn">
+            ▶
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================= -->
+    <!-- 모바일 상호작용 -->
+    <!-- ========================= -->
+
+    <button id="mobileInteractionBtn">
+
+        조사
+
+    </button>
+
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
