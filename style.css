@@ -1,5 +1,5 @@
 /* ========================= */
-/* 전체 기본 설정 */
+/* 기본 설정 */
 /* ========================= */
 
 * {
@@ -22,17 +22,25 @@ body {
     font-family: Arial, sans-serif;
 }
 
+
+/* ========================= */
 /* 게임 화면 */
+/* ========================= */
+
 #game {
     position: relative;
     width: min(100vw, 1536px);
     aspect-ratio: 3 / 2;
     overflow: hidden;
-    background: black;
+    background: #000;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
 }
 
-/* 장면 */
+
+/* ========================= */
+/* 공통 장면 */
+/* ========================= */
+
 .scene {
     position: absolute;
     inset: 0;
@@ -44,7 +52,6 @@ body {
     display: block;
 }
 
-/* 배경 이미지 */
 .scene-background {
     position: absolute;
     inset: 0;
@@ -56,7 +63,11 @@ body {
     pointer-events: none;
 }
 
+
+/* ========================= */
 /* 투명 버튼 */
+/* ========================= */
+
 .invisible-button {
     position: absolute;
     border: none;
@@ -79,8 +90,9 @@ body {
     height: 10%;
 }
 
+
 /* ========================= */
-/* 맵 선택 */
+/* 맵 선택 화면 */
 /* ========================= */
 
 #mapSelect {
@@ -95,11 +107,11 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     width: 70%;
     padding: 40px;
+    transform: translate(-50%, -50%);
     text-align: center;
-    background: rgba(24, 69, 111, 0.94);
+    background: rgba(24, 69, 111, 0.95);
     border: 6px solid #d8e4ec;
     border-radius: 18px;
 }
@@ -107,7 +119,7 @@ body {
 .map-select-panel h1 {
     margin-top: 0;
     margin-bottom: 35px;
-    color: white;
+    color: #fff;
 }
 
 .map-buttons {
@@ -123,28 +135,31 @@ body {
     padding: 25px;
     border: 5px solid #61350f;
     border-radius: 12px;
-    background: linear-gradient(
-        #bb742e,
-        #8c4b18
-    );
-    color: white;
+    background: linear-gradient(#bb742e, #8c4b18);
+    color: #fff;
     cursor: pointer;
+}
+
+.map-button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
 }
 
 .map-icon {
     display: block;
-    font-size: 60px;
     margin-bottom: 15px;
+    font-size: 60px;
 }
 
 .map-button strong {
     display: block;
-    font-size: 32px;
     margin-bottom: 12px;
+    font-size: 32px;
 }
 
 .map-button small {
     font-size: 18px;
+    line-height: 1.5;
 }
 
 .wood-button {
@@ -152,15 +167,13 @@ body {
     padding: 14px 30px;
     border: 4px solid #61350f;
     border-radius: 8px;
-    background: linear-gradient(
-        #bd762e,
-        #914d18
-    );
-    color: white;
+    background: linear-gradient(#bd762e, #914d18);
+    color: #fff;
     font-size: 22px;
     font-weight: bold;
     cursor: pointer;
 }
+
 
 /* ========================= */
 /* 플레이어 */
@@ -168,22 +181,16 @@ body {
 
 .player {
     position: absolute;
-
+    left: 42%;
+    top: 54%;
     width: 8%;
     height: 18%;
-
-    left: 42%;
-    top: 56%;
-
     z-index: 15;
-
     background-image: url("images/player.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center bottom;
-
     image-rendering: pixelated;
-
     user-select: none;
     pointer-events: none;
 }
@@ -192,28 +199,22 @@ body {
     content: none;
 }
 
+
 /* ========================= */
 /* 인벤토리 */
 /* ========================= */
 
 #inventoryPanel {
     position: absolute;
-
     top: 3%;
     right: 3%;
-
     width: 320px;
-
     display: none;
-
     z-index: 100;
-
+    overflow: hidden;
     background: #c8d6df;
-
     border: 5px solid #34495e;
     border-radius: 12px;
-
-    overflow: hidden;
 }
 
 #inventoryPanel.open {
@@ -222,149 +223,104 @@ body {
 
 .inventory-header {
     height: 45px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     padding: 0 10px;
-
-    background: linear-gradient(
-        #f2eee4,
-        #d7d2c7
-    );
-
+    background: linear-gradient(#f2eee4, #d7d2c7);
     font-weight: bold;
 }
 
 #inventoryCloseBtn {
     width: 32px;
     height: 32px;
-
     border: none;
     border-radius: 5px;
-
     background: #0876bb;
-
-    color: white;
-
+    color: #fff;
     font-size: 25px;
-
     cursor: pointer;
 }
 
 .inventory-tab {
     width: 90px;
-
     margin-left: 10px;
-
     padding: 8px;
-
     background: #ffb000;
-
     border: 3px solid #7a4a00;
-
     font-size: 20px;
     font-weight: bold;
-
     text-align: center;
 }
 
 #inventoryGrid {
-    display: grid;
-
-    grid-template-columns: repeat(
-        4,
-        minmax(0, 1fr)
-    );
-
-    grid-template-rows: repeat(
-        3,
-        minmax(0, 1fr)
-    );
-
-    gap: 4px;
-
     width: 100%;
     height: 300px;
-
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    gap: 4px;
     padding: 10px;
-
-    background: #f4ead8;
-
     overflow: hidden;
+    background: #f4ead8;
 }
 
 .inventory-slot {
     min-width: 0;
     min-height: 0;
-
     overflow: hidden;
-
-    background: linear-gradient(
-        #fffaf0,
-        #eee1c8
-    );
-
+    background: linear-gradient(#fffaf0, #eee1c8);
     border: 3px solid #9c9588;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .item-icon {
-    font-size: 27px;
-    line-height: 1;
-
-    text-align: center;
-
     margin-top: 7px;
     margin-bottom: 3px;
-
-    cursor: pointer;
+    font-size: 27px;
+    line-height: 1;
+    text-align: center;
 }
 
 .item-name {
+    margin: 0;
     font-size: 13px;
     line-height: 1.1;
-
-    text-align: center;
-
     font-weight: bold;
-
-    margin: 0;
-
-    cursor: pointer;
+    text-align: center;
 }
 
 .equipped-label {
+    margin-top: 4px;
+    color: #f07800;
     font-size: 11px;
     line-height: 1;
-
-    text-align: center;
-
-    color: #f07800;
-
     font-weight: 800;
-
-    margin-top: 4px;
+    text-align: center;
 }
+
+
+/* ========================= */
+/* 선택 버튼 */
+/* ========================= */
 
 .choice-button {
     margin: 8px;
-
     padding: 10px 18px;
-
     border: 3px solid #61350f;
     border-radius: 8px;
-
     background: #ffb000;
-
     color: #2b1a0b;
-
     font-size: 18px;
     font-weight: bold;
-
     cursor: pointer;
 }
+
+.choice-button:hover {
+    filter: brightness(1.08);
+}
+
 
 /* ========================= */
 /* 상호작용 안내 */
@@ -372,34 +328,18 @@ body {
 
 #interactionGuide {
     position: absolute;
-
     left: 50%;
     bottom: 17%;
-
-    transform: translateX(-50%);
-
     display: none;
-
     align-items: center;
-
     gap: 10px;
-
     z-index: 70;
-
     padding: 8px 15px;
-
-    background: rgba(
-        15,
-        30,
-        45,
-        0.9
-    );
-
-    border: 3px solid white;
+    transform: translateX(-50%);
+    background: rgba(15, 30, 45, 0.9);
+    border: 3px solid #fff;
     border-radius: 8px;
-
-    color: white;
-
+    color: #fff;
     font-size: 20px;
     font-weight: bold;
 }
@@ -409,53 +349,34 @@ body {
 }
 
 #interactionKey {
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
     width: 38px;
     height: 38px;
-
-    background: white;
-
-    color: #222;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
     border-radius: 6px;
+    color: #222;
 }
 
+
 /* ========================= */
-/* 대화창 */
+/* 일반 대화창 */
 /* ========================= */
 
 #dialogueBox {
     position: absolute;
-
     left: 50%;
     bottom: 14%;
-
-    transform: translateX(-50%);
-
     width: 72%;
-
     min-height: 150px;
-
     display: none;
-
     z-index: 120;
-
     padding: 25px 30px;
-
-    background: rgba(
-        245,
-        238,
-        216,
-        0.97
-    );
-
+    transform: translateX(-50%);
+    background: rgba(245, 238, 216, 0.97);
     border: 6px solid #5c3919;
     border-radius: 12px;
-
     box-shadow:
         inset 0 0 0 3px #bd8a4d,
         0 8px 0 #2e1c0d;
@@ -467,89 +388,234 @@ body {
 
 #dialogueName {
     position: absolute;
-
     left: 25px;
     top: -32px;
-
     padding: 7px 25px;
-
     background: #9a5a21;
-
     border: 4px solid #5c3919;
     border-radius: 8px;
-
-    color: white;
-
+    color: #fff;
     font-size: 20px;
     font-weight: bold;
 }
 
 #dialogueText {
     color: #30251c;
-
     font-size: 22px;
     line-height: 1.6;
-
     text-align: left;
 }
 
 #dialogueCloseBtn {
     float: right;
-
     min-width: 100px;
-
     padding: 8px 15px;
-
     border: 3px solid #61350f;
     border-radius: 7px;
-
     background: #a85e22;
-
-    color: white;
-
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
-
     cursor: pointer;
 }
 
+
 /* ========================= */
-/* 사고 / 결과 */
+/* 낚시 컷신 */
+/* ========================= */
+
+.cutscene-scene {
+    cursor: pointer;
+}
+
+.cutscene-speech {
+    position: absolute;
+    left: 35%;
+    top: 28%;
+    width: 27%;
+    min-height: 95px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 40;
+    padding: 16px 22px;
+    background: rgba(255, 255, 255, 0.97);
+    border: 4px solid #292929;
+    border-radius: 8px;
+    color: #151515;
+    font-size: clamp(18px, 2vw, 30px);
+    font-weight: bold;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: 0 7px 0 rgba(0, 0, 0, 0.25);
+}
+
+.cutscene-speech::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    bottom: -25px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 25px solid #292929;
+}
+
+.cutscene-speech::before {
+    content: "";
+    position: absolute;
+    left: calc(18% + 4px);
+    bottom: -17px;
+    z-index: 1;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 19px solid #fff;
+}
+
+.cutscene-speech.alert {
+    color: #c51b13;
+    transform: scale(1.05);
+}
+
+#cutsceneSkipGuide {
+    position: absolute;
+    right: 3%;
+    bottom: 4%;
+    z-index: 42;
+    padding: 8px 14px;
+    background: rgba(0, 0, 0, 0.62);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: 7px;
+    color: #fff;
+    font-size: 14px;
+    opacity: 0.85;
+}
+
+/* 낚시 컷신 표정 변화 캐릭터 */
+
+.fishing-expression-character {
+    position: absolute;
+
+    /*
+     * 낚시 장면 속 기존 캐릭터 위에 겹치는 위치다.
+     * 화면에 맞지 않으면 left, top 값을 직접 조절하면 된다.
+     */
+    left: 36%;
+    top: 30%;
+
+    width: 13%;
+    height: 35%;
+
+    z-index: 32;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    image-rendering: pixelated;
+
+    pointer-events: none;
+    user-select: none;
+
+    display: none;
+}
+
+/* 표정 이미지가 필요한 대사에서만 표시 */
+.fishing-expression-character.show {
+    display: block;
+}
+
+/* 놀란 순간에는 가볍게 튀는 효과 */
+.fishing-expression-character.shocked {
+    animation: character-shock 0.25s ease-in-out 2;
+}
+
+@keyframes character-shock {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-7px) scale(1.05);
+    }
+
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ========================= */
+/* 해수욕장 컷신 주인공 */
+/* ========================= */
+
+.beach-cutscene-character,
+.beach-expression-character {
+    position: absolute;
+
+    left: 48%;
+    top: 51%;
+
+    width: 10%;
+    height: 25%;
+
+    z-index: 32;
+
+    object-fit: contain;
+    object-position: center bottom;
+
+    image-rendering: pixelated;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.beach-expression-character {
+    display: none;
+    z-index: 33;
+}
+
+.beach-expression-character.show {
+    display: block;
+}
+
+.beach-expression-character.shocked {
+    animation: character-shock 0.25s ease-in-out 2;
+}
+
+.beach-speech {
+    left: 43%;
+    top: 34%;
+    width: 29%;
+}
+
+/* ========================= */
+/* 사고 및 결과 화면 */
 /* ========================= */
 
 .result-scene {
     position: absolute;
-
     inset: 0;
-
     display: none;
-
     z-index: 200;
-
     flex-direction: column;
-
     justify-content: center;
     align-items: center;
-
-    text-align: center;
-
-    background: linear-gradient(
-        #0d335c,
-        #061827
-    );
-
-    color: white;
-
     padding: 40px;
+    background: linear-gradient(#0d335c, #061827);
+    color: #fff;
+    text-align: center;
 }
 
 .result-scene.open {
     display: flex;
 }
 
+.result-icon {
+    margin-bottom: 5px;
+    font-size: 75px;
+}
+
 .result-scene h1 {
-    font-size: 42px;
     margin-bottom: 20px;
+    font-size: 42px;
 }
 
 .result-scene p {
@@ -559,110 +625,81 @@ body {
 
 .result-scene .hint {
     margin-top: 20px;
-
-    font-size: 18px;
-
     color: #ffd86b;
+    font-size: 18px;
+}
+
+.clear-message {
+    color: #ffe57a;
+    font-weight: bold;
 }
 
 .result-scene button {
     margin-top: 25px;
-
     padding: 14px 28px;
-
     border: 4px solid #61350f;
     border-radius: 8px;
-
     background: #ffb000;
-
     color: #2b1a0b;
-
     font-size: 22px;
     font-weight: bold;
-
     cursor: pointer;
 }
 
+
 /* ========================= */
-/* 모바일 */
+/* 모바일 조작 */
 /* ========================= */
 
 #mobileControls {
     position: absolute;
-
     left: 0;
     bottom: 3%;
-
     width: 100%;
-
     display: none;
-
     justify-content: space-between;
-
     padding: 0 30px;
-
     z-index: 80;
-
     pointer-events: none;
 }
 
 #mobileControls button {
     width: 80px;
     height: 80px;
-
+    border: 4px solid #fff;
     border-radius: 50%;
-
-    border: 4px solid white;
-
-    background: rgba(
-        0,
-        0,
-        0,
-        0.45
-    );
-
-    color: white;
-
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
     font-size: 34px;
-
     pointer-events: auto;
 }
 
 #mobileInteractionBtn {
     position: absolute;
-
     right: 30px;
     bottom: 110px;
-
     width: 80px;
     height: 55px;
-
     display: none;
-
     z-index: 90;
-
-    border: 4px solid white;
+    border: 4px solid #fff;
     border-radius: 10px;
-
-    background: rgba(
-        0,
-        0,
-        0,
-        0.6
-    );
-
-    color: white;
-
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
 }
+
+
+/* ========================= */
+/* 모바일 화면 대응 */
+/* ========================= */
 
 @media (max-width: 700px) {
 
     #game {
         width: 100vw;
         height: 100vh;
-
         aspect-ratio: auto;
     }
 
@@ -675,10 +712,9 @@ body {
     }
 
     #inventoryPanel {
-        width: 260px;
-
-        right: 2%;
         top: 2%;
+        right: 2%;
+        width: 260px;
     }
 
     #inventoryGrid {
@@ -686,33 +722,125 @@ body {
     }
 
     #dialogueBox {
-        width: 88%;
-
         bottom: 18%;
+        width: 88%;
     }
 
-   .player {
-    position: absolute;
+    .player {
+        width: 10%;
+        height: 19%;
+    }
 
-    width: 8%;
-    height: 18%;
+    .map-select-panel {
+        width: 90%;
+        padding: 24px 15px;
+    }
 
-    left: 42%;
-    top: 56%;
+    .map-buttons {
+        gap: 12px;
+    }
 
-    z-index: 15;
+    .map-button {
+        width: 46%;
+        min-height: 180px;
+        padding: 14px;
+    }
 
-    background-image: url("images/player.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center bottom;
+    .map-icon {
+        font-size: 42px;
+    }
 
-    image-rendering: pixelated;
+    .map-button strong {
+        font-size: 24px;
+    }
 
-    user-select: none;
-    pointer-events: none;
+    .map-button small {
+        font-size: 14px;
+    }
+
+    .cutscene-speech {
+        left: 34%;
+        top: 27%;
+        width: 38%;
+        min-height: 75px;
+        padding: 10px 12px;
+        font-size: 16px;
+    }
+
+    #cutsceneSkipGuide {
+        right: 2%;
+        bottom: 2%;
+        font-size: 11px;
+    }
+
+    .result-scene h1 {
+        font-size: 31px;
+    }
+
+    .result-scene p {
+        font-size: 18px;
+    }
 }
 
-.player::after {
-    content: none;
+.certificate-box{
+
+    margin-top:30px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:15px;
+
+}
+
+.certificate-text{
+
+    font-size:22px;
+    color:white;
+    line-height:1.6;
+    text-align:center;
+
+}
+
+.certificate-btn{
+
+    padding:16px 36px;
+
+    font-size:24px;
+    font-weight:bold;
+
+    color:white;
+
+    background:#2a9d4b;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.certificate-btn:hover{
+
+    transform:scale(1.05);
+
+    background:#39b85b;
+
+}
+
+.menu-btn{
+
+    padding:14px 30px;
+
+    font-size:20px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
 }
