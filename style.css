@@ -824,6 +824,48 @@ body {
     display: block;
 }
 
+/* ========================= */
+/* 모바일 모드 전용 조작 버튼 */
+/* ========================= */
+
+body.mode-mobile #mobileControls {
+    /*
+     * 기존 620px 제한을 해제하고
+     * 양쪽 버튼을 화면 가장자리로 이동
+     */
+    width: 94%;
+    max-width: none;
+    bottom: 4%;
+    padding: 0 2%;
+}
+
+/* 모바일 모드에서만 이동 버튼 확대 */
+body.mode-mobile #mobileControls button {
+    width: 180px;
+    height: 150px;
+
+    border-width: 6px;
+    font-size: 58px;
+
+    /*
+     * 길게 눌렀을 때 글자 선택, 확대,
+     * 브라우저 기본 터치 동작 방지
+     */
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+
+    cursor: pointer;
+}
+
+/* 버튼 안의 화살표도 선택되지 않도록 설정 */
+body.mode-mobile #mobileControls button * {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 @media (max-width: 700px) and (min-width: 701px) {
 
     #inventoryPanel {

@@ -1763,66 +1763,140 @@ document.addEventListener(
 /* 모바일 이동 */
 /* ========================= */
 
-leftBtn.addEventListener(
-    "pointerdown",
-    function (event) {
-        event.preventDefault();
+function startMobileMove(event, direction) {
+    /*
+     * 길게 누르기를 글자 선택, 화면 이동,
+     * 확대 동작으로 인식하지 않도록 방지
+     */
+    event.preventDefault();
 
+    /*
+     * 손가락이 버튼에서 조금 벗어나더라도
+     * 동일한 버튼이 터치를 계속 전달받도록 설정
+     */
+    if (event.currentTarget.setPointerCapture) {
+        event.currentTarget.setPointerCapture(
+            event.pointerId
+        );
+    }
+
+    if (direction === "left") {
         movingLeft = true;
+        movingRight = false;
+    }
+
+    if (direction === "right") {
+        movingRight = true;
+        movingLeft = false;
+    }
+}
+
+
+function stopMobileMove(event, direction) {
+    if (event) {
+        event.preventDefault();
+
+        if (
+            event.currentTarget.releasePointerCapture &&
+            event.currentTarget.hasPointerCapture &&
+            event.currentTarget.hasPointerCapture(
+                event.pointerId
+            )
+        ) {
+            event.currentTarget.releasePointerCapture(
+                event.pointerId
+            );
+        }
+    }
+
+    if (direction === "left") {
+        movingLeft = false;
+    }
+
+    if (direction === "right") {
+        movingRight = false;
+    }
+}
+
+
+/* 왼쪽 이동 버튼 */
+
+leftBtn.addEventListener(
+    "pointerdown",
+    function (event) {
+        startMobileMove(event, "left");
     }
 );
 
 leftBtn.addEventListener(
     "pointerup",
-    function () {
-        movingLeft = false;
-    }
-);
-
-leftBtn.addEventListener(
-    "pointerleave",
-    function () {
-        movingLeft = false;
+    function (event) {
+        stopMobileMove(event, "left");
     }
 );
 
 leftBtn.addEventListener(
     "pointercancel",
-    function () {
-        movingLeft = false;
+    function (event) {
+        stopMobileMove(event, "left");
     }
 );
+
+
+/* 오른쪽 이동 버튼 */
 
 rightBtn.addEventListener(
     "pointerdown",
     function (event) {
-        event.preventDefault();
-
-        movingRight = true;
+        startMobileMove(event, "right");
     }
 );
 
 rightBtn.addEventListener(
     "pointerup",
-    function () {
-        movingRight = false;
-    }
-);
-
-rightBtn.addEventListener(
-    "pointerleave",
-    function () {
-        movingRight = false;
+    function (event) {
+        stopMobileMove(event, "right");
     }
 );
 
 rightBtn.addEventListener(
     "pointercancel",
-    function () {
-        movingRight = false;
+    function (event) {
+        stopMobileMove(event, "right");
     }
 );
 
+
+/*
+ * 버튼을 길게 눌렀을 때 나타나는
+ * 브라우저 메뉴를 차단합니다.
+ */
+leftBtn.addEventListener(
+    "contextmenu",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+rightBtn.addEventListener(
+    "contextmenu",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+
+/*
+ * 앱 전환 등으로 터치가 갑자기 끊겼을 때
+ * 캐릭터가 계속 이동하는 현상을 방지합니다.
+ */
+window.addEventListener(
+    "blur",
+    function () {
+        movingLeft = false;
+        movingRight = false;
+    }
+);
 
 /* ========================= */
 /* 모바일 상호작용 */
