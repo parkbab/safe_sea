@@ -10,7 +10,11 @@
  * 실제 표시 영역과 다르게 계산될 수 있기 때문에
  * visualViewport 값을 CSS로 전달합니다.
  */
-function updateVisibleViewport() {
+/*
+ * PC 기준 1536 × 1024 화면 전체를
+ * 현재 브라우저의 실제 표시 영역에 맞춰 축소합니다.
+ */
+function fitGameToViewport() {
     const viewport = window.visualViewport;
 
     const width = viewport
@@ -21,52 +25,87 @@ function updateVisibleViewport() {
         ? viewport.height
         : window.innerHeight;
 
-    document.documentElement.style.setProperty(
-        "--app-width",
-        `${width}px`
+    const offsetLeft = viewport
+        ? viewport.offsetLeft
+        : 0;
+
+    const offsetTop = viewport
+        ? viewport.offsetTop
+        : 0;
+
+    const game =
+        document.getElementById("game");
+
+    if (!game) {
+        return;
+    }
+
+    /*
+     * 가로와 세로 중 더 부족한 방향을 기준으로
+     * 전체 게임의 축소 비율을 결정합니다.
+     */
+    const scale = Math.min(
+        width / 1536,
+        height / 1024
     );
 
-    document.documentElement.style.setProperty(
-        "--app-height",
-        `${height}px`
-    );
+    /*
+     * 실제로 보이는 화면의 중앙에 게임을 배치하고
+     * 배경, 캐릭터, UI를 모두 같은 비율로 축소합니다.
+     */
+    game.style.left =
+        `${offsetLeft + width / 2}px`;
+
+    game.style.top =
+        `${offsetTop + height / 2}px`;
+
+    game.style.transform =
+        `translate(-50%, -50%) scale(${scale})`;
 }
 
 
-/* 처음 페이지가 열렸을 때 화면 크기 계산 */
-updateVisibleViewport();
+/* 페이지가 처음 열렸을 때 실행 */
+fitGameToViewport();
 
 
-/* 브라우저 화면 크기가 바뀌었을 때 다시 계산 */
+/* 브라우저 크기가 바뀔 때 실행 */
 window.addEventListener(
     "resize",
-    updateVisibleViewport
+    fitGameToViewport
 );
 
 
-/* 휴대폰을 가로 또는 세로로 회전했을 때 다시 계산 */
+/* 휴대폰을 회전했을 때 실행 */
 window.addEventListener(
     "orientationchange",
-    updateVisibleViewport
+    function () {
+        /*
+         * 회전 직후 브라우저가 새 화면 크기를
+         * 계산할 시간을 조금 기다립니다.
+         */
+        window.setTimeout(
+            fitGameToViewport,
+            100
+        );
+    }
 );
 
 
 /*
- * 모바일 브라우저의 주소창이 나타나거나 사라질 때
- * 실제 표시 영역의 크기를 다시 계산합니다.
+ * 모바일 브라우저에서 주소창이 나타나거나
+ * 사라질 때도 크기를 다시 계산합니다.
  */
 if (window.visualViewport) {
     window.visualViewport.addEventListener(
         "resize",
-        updateVisibleViewport
+        fitGameToViewport
     );
 
     window.visualViewport.addEventListener(
         "scroll",
-        updateVisibleViewport
+        fitGameToViewport
     );
 }
-
 
 /* ========================= */
 /* 장면 */

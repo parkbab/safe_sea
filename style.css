@@ -9,7 +9,7 @@
 html,
 body {
     margin: 0;
-    width: var(--app-width, 100%);
+    width: 100%;
     /*
      * 100%(=100vh)만 쓰면 모바일 브라우저의 주소창이 있을 때/없을 때
      * 실제 눈에 보이는 화면 높이와 어긋나서 위아래가 잘리는 문제가 생긴다.
@@ -17,7 +17,7 @@ body {
      * 주소창 유무와 상관없이 항상 실제 보이는 영역에 맞춰진다.
      */
     height: 100vh;
-    height: var(--app-height, 100dvh);
+    height: 100dvh;
     overflow: hidden;
     background: #07192b;
 }
@@ -35,7 +35,7 @@ body {
 /* ========================= */
 
 #game {
-    position: relative;
+    position: fixed;
     /*
      * 가로 폭(100vw)과 세로 높이(100dvh 기준 3:2 환산값) 중
      * 더 작은 쪽에 맞춰서 항상 3:2 비율을 유지한다.
@@ -46,8 +46,13 @@ body {
      * 높이(주소창 제외)를 기준으로 계산된다.
      */
     width: min(100vw, calc(100vh * 1.5), 1536px);
-    width: min(var(--app-width, 100vw), calc(var(--app-height, 100dvh) * 1.5), 1536px);
-    height: min(var(--app-height, 100dvh), calc(var(--app-width, 100vw) / 1.5), 1024px);
+    left: 50%;
+    top: 50%;
+    width: 1536px;
+    height: 1024px;
+    flex: none;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
     aspect-ratio: 3 / 2;
     overflow: hidden;
     background: #000;
@@ -819,7 +824,7 @@ body {
     display: block;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 700px) and (min-width: 701px) {
 
     #inventoryPanel {
         top: 2%;
@@ -959,7 +964,7 @@ body {
  * 휴대폰 가로 화면은 폭은 넓지만 높이가 매우 낮다. 기존의 max-width
  * 조건은 이런 화면에 적용되지 않았으므로, 높이를 기준으로 별도 축소한다.
  */
-@media (orientation: landscape) and (max-height: 700px) {
+@media (orientation: landscape) and (max-height: 700px) and (min-height: 701px) {
     .map-select-panel {
         width: 78%;
         max-height: 94%;
