@@ -96,6 +96,75 @@
 
 
     <!-- ========================= -->
+    <!-- 조작 방식 선택 화면 -->
+    <!-- ========================= -->
+
+    <section
+        id="controlModeSelect"
+        class="scene"
+    >
+        <div class="map-select-panel">
+
+            <h1>조작 방식을 선택하세요</h1>
+
+            <div class="map-buttons">
+
+                <button
+                    id="pcModeBtn"
+                    class="map-button"
+                >
+                    <span class="map-icon">🖥️</span>
+
+                    <strong>PC로 플레이</strong>
+
+                    <small>
+                        키보드 방향키(◀ ▶)로<br>
+                        좌우 이동합니다.
+                    </small>
+                </button>
+
+                <button
+                    id="mobileModeBtn"
+                    class="map-button"
+                >
+                    <span class="map-icon">📱</span>
+
+                    <strong>모바일로 플레이</strong>
+
+                    <small>
+                        화면의 버튼을 눌러<br>
+                        좌우 이동합니다.
+                    </small>
+                </button>
+
+            </div>
+
+            <button
+                id="backToMainFromMode"
+                class="wood-button"
+            >
+                돌아가기
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- 가로 모드 안내 화면 -->
+    <!-- ========================= -->
+
+    <div id="rotateOverlay">
+        <div class="rotate-icon">📱↻</div>
+        <h1>화면을 가로로 돌려주세요</h1>
+        <p>
+            모바일 모드는 가로 화면에서<br>
+            플레이하도록 만들어졌습니다.
+        </p>
+    </div>
+
+
+    <!-- ========================= -->
     <!-- 선착장 맵 -->
     <!-- ========================= -->
 

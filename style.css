@@ -29,11 +29,88 @@ body {
 
 #game {
     position: relative;
-    width: min(100vw, 1536px);
+    /*
+     * 가로 폭(100vw)과 세로 높이(100vh 기준 3:2 환산값) 중
+     * 더 작은 쪽에 맞춰서 항상 3:2 비율을 유지한다.
+     * 모바일을 가로로 눕혀서 플레이할 때도 PC와 동일하게
+     * 화면을 최대한 넓게 채우면서 비율이 깨지지 않는다.
+     */
+    width: min(100vw, calc(100vh * 1.5), 1536px);
     aspect-ratio: 3 / 2;
     overflow: hidden;
     background: #000;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+
+/* ========================= */
+/* 조작 방식 선택 화면 */
+/* ========================= */
+
+#controlModeSelect {
+    background: linear-gradient(
+        #169fea 0%,
+        #79d7ff 55%,
+        #006bb3 100%
+    );
+}
+
+
+/* ========================= */
+/* 가로 모드 안내 화면 */
+/* ========================= */
+
+#rotateOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 30px;
+    background: #07192b;
+    color: #fff;
+    text-align: center;
+}
+
+#rotateOverlay .rotate-icon {
+    font-size: 60px;
+    animation: rotate-hint 1.6s ease-in-out infinite;
+}
+
+#rotateOverlay h1 {
+    margin: 0;
+    font-size: 26px;
+}
+
+#rotateOverlay p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #cfe6f7;
+}
+
+@keyframes rotate-hint {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(-90deg);
+    }
+}
+
+/* 모바일 모드 + 세로 화면일 때만 회전 안내를 띄우고 게임은 숨긴다 */
+@media (orientation: portrait) {
+    body.mode-mobile #rotateOverlay {
+        display: flex;
+    }
+
+    body.mode-mobile #game {
+        display: none;
+    }
 }
 
 
@@ -159,6 +236,26 @@ body {
 
 .map-button small {
     font-size: 18px;
+    line-height: 1.5;
+}
+
+
+/* ========================= */
+/* 조작 방식 선택 버튼 글씨 크기 축소 */
+/* ========================= */
+
+#controlModeSelect .map-icon {
+    margin-bottom: 10px;
+    font-size: 44px;
+}
+
+#controlModeSelect .map-button strong {
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+#controlModeSelect .map-button small {
+    font-size: 15px;
     line-height: 1.5;
 }
 
@@ -664,7 +761,7 @@ body {
 }
 
 #mobileControls button {
-    width: 80px;
+    width: 100px;
     height: 80px;
     border: 4px solid #fff;
     border-radius: 50%;
@@ -676,9 +773,10 @@ body {
 
 #mobileInteractionBtn {
     position: absolute;
-    right: 30px;
-    bottom: 110px;
-    width: 80px;
+    left: 50%;
+    bottom: 17%;
+    transform: translateX(-50%);
+    width: 110px;
     height: 55px;
     display: none;
     z-index: 90;
@@ -695,21 +793,21 @@ body {
 /* 모바일 화면 대응 */
 /* ========================= */
 
+/*
+ * 모바일 이동/상호작용 버튼은 더 이상 화면 폭으로 판단하지 않는다.
+ * 조작 방식 선택 화면에서 "모바일로 플레이"를 고르면 JS가
+ * body에 mode-mobile 클래스를, #mobileControls / #mobileInteractionBtn에
+ * "show" 클래스를 붙여서 화면 크기와 무관하게 항상 표시한다.
+ */
+#mobileControls.show {
+    display: flex;
+}
+
+#mobileInteractionBtn.show {
+    display: block;
+}
+
 @media (max-width: 700px) {
-
-    #game {
-        width: 100vw;
-        height: 100vh;
-        aspect-ratio: auto;
-    }
-
-    #mobileControls.show {
-        display: flex;
-    }
-
-    #mobileInteractionBtn.show {
-        display: block;
-    }
 
     #inventoryPanel {
         top: 2%;

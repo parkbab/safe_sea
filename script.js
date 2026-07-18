@@ -4,6 +4,7 @@
 
 const scenes = {
     main: document.getElementById("mainMenu"),
+    controlModeSelect: document.getElementById("controlModeSelect"),
     mapSelect: document.getElementById("mapSelect"),
     dock: document.getElementById("dockScene"),
     beach: document.getElementById("beachScene"),
@@ -26,6 +27,23 @@ const beachBtn =
 
 const backToMain =
     document.getElementById("backToMain");
+
+
+/* ========================= */
+/* 조작 방식 선택 */
+/* ========================= */
+
+const pcModeBtn =
+    document.getElementById("pcModeBtn");
+
+const mobileModeBtn =
+    document.getElementById("mobileModeBtn");
+
+const backToMainFromMode =
+    document.getElementById("backToMainFromMode");
+
+const rotateOverlay =
+    document.getElementById("rotateOverlay");
 
 
 /* ========================= */
@@ -159,6 +177,9 @@ const beachSpeechBubble =
 let currentScene = "main";
 let currentPlayer = null;
 let playerX = 42;
+
+// "pc" 또는 "mobile" - 조작 방식 선택 화면에서 결정된다.
+let controlMode = "pc";
 
 let movingLeft = false;
 let movingRight = false;
@@ -339,7 +360,11 @@ function showScene(sceneName) {
 
         resetPlayer("dock");
 
-        mobileControls.classList.add("show");
+        if (controlMode === "mobile") {
+            mobileControls.classList.add("show");
+        } else {
+            mobileControls.classList.remove("show");
+        }
     }
 
     else if (sceneName === "beach") {
@@ -347,7 +372,11 @@ function showScene(sceneName) {
 
         resetPlayer("beach");
 
-        mobileControls.classList.add("show");
+        if (controlMode === "mobile") {
+            mobileControls.classList.add("show");
+        } else {
+            mobileControls.classList.remove("show");
+        }
     }
 
     else {
@@ -485,8 +514,11 @@ function updateInteraction() {
             mobileInteractionBtn.textContent =
                 zone.text;
 
-            interactionGuide.classList.add("show");
-            mobileInteractionBtn.classList.add("show");
+            if (controlMode === "mobile") {
+                mobileInteractionBtn.classList.add("show");
+            } else {
+                interactionGuide.classList.add("show");
+            }
         }
     });
 }
@@ -1443,9 +1475,46 @@ function toggleInventory() {
 startBtn.addEventListener(
     "click",
     function () {
+        showScene("controlModeSelect");
+    }
+);
+
+
+/* ========================= */
+/* 조작 방식 선택 버튼 */
+/* ========================= */
+
+pcModeBtn.addEventListener(
+    "click",
+    function () {
+        controlMode = "pc";
+
+        document.body.classList.remove("mode-mobile");
+        document.body.classList.add("mode-pc");
+
         showScene("mapSelect");
     }
 );
+
+mobileModeBtn.addEventListener(
+    "click",
+    function () {
+        controlMode = "mobile";
+
+        document.body.classList.remove("mode-pc");
+        document.body.classList.add("mode-mobile");
+
+        showScene("mapSelect");
+    }
+);
+
+backToMainFromMode.addEventListener(
+    "click",
+    function () {
+        showScene("main");
+    }
+);
+
 
 dockBtn.addEventListener(
     "click",
