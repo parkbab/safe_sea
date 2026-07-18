@@ -2,6 +2,76 @@
 /* 장면 */
 /* ========================= */
 
+/*
+ * 모바일 브라우저에서 주소창과 하단 바를 제외한
+ * 실제로 보이는 화면 크기를 계산합니다.
+ *
+ * 일부 모바일 Chrome에서는 100vh와 100dvh가
+ * 실제 표시 영역과 다르게 계산될 수 있기 때문에
+ * visualViewport 값을 CSS로 전달합니다.
+ */
+function updateVisibleViewport() {
+    const viewport = window.visualViewport;
+
+    const width = viewport
+        ? viewport.width
+        : window.innerWidth;
+
+    const height = viewport
+        ? viewport.height
+        : window.innerHeight;
+
+    document.documentElement.style.setProperty(
+        "--app-width",
+        `${width}px`
+    );
+
+    document.documentElement.style.setProperty(
+        "--app-height",
+        `${height}px`
+    );
+}
+
+
+/* 처음 페이지가 열렸을 때 화면 크기 계산 */
+updateVisibleViewport();
+
+
+/* 브라우저 화면 크기가 바뀌었을 때 다시 계산 */
+window.addEventListener(
+    "resize",
+    updateVisibleViewport
+);
+
+
+/* 휴대폰을 가로 또는 세로로 회전했을 때 다시 계산 */
+window.addEventListener(
+    "orientationchange",
+    updateVisibleViewport
+);
+
+
+/*
+ * 모바일 브라우저의 주소창이 나타나거나 사라질 때
+ * 실제 표시 영역의 크기를 다시 계산합니다.
+ */
+if (window.visualViewport) {
+    window.visualViewport.addEventListener(
+        "resize",
+        updateVisibleViewport
+    );
+
+    window.visualViewport.addEventListener(
+        "scroll",
+        updateVisibleViewport
+    );
+}
+
+
+/* ========================= */
+/* 장면 */
+/* ========================= */
+
 const scenes = {
     main: document.getElementById("mainMenu"),
     controlModeSelect: document.getElementById("controlModeSelect"),
