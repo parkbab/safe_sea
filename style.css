@@ -10,7 +10,14 @@ html,
 body {
     margin: 0;
     width: 100%;
-    height: 100%;
+    /*
+     * 100%(=100vh)만 쓰면 모바일 브라우저의 주소창이 있을 때/없을 때
+     * 실제 눈에 보이는 화면 높이와 어긋나서 위아래가 잘리는 문제가 생긴다.
+     * dvh(동적 뷰포트 높이)를 지원하는 브라우저에서는 이 값이 우선 적용되어
+     * 주소창 유무와 상관없이 항상 실제 보이는 영역에 맞춰진다.
+     */
+    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     background: #07192b;
 }
@@ -30,12 +37,16 @@ body {
 #game {
     position: relative;
     /*
-     * 가로 폭(100vw)과 세로 높이(100vh 기준 3:2 환산값) 중
+     * 가로 폭(100vw)과 세로 높이(100dvh 기준 3:2 환산값) 중
      * 더 작은 쪽에 맞춰서 항상 3:2 비율을 유지한다.
      * 모바일을 가로로 눕혀서 플레이할 때도 PC와 동일하게
      * 화면을 최대한 넓게 채우면서 비율이 깨지지 않는다.
+     * dvh를 지원하지 않는 구형 브라우저를 위해 vh 값을 먼저 적어두고,
+     * dvh를 지원하는 브라우저에서는 아래 줄이 덮어써서 실제 보이는
+     * 높이(주소창 제외)를 기준으로 계산된다.
      */
     width: min(100vw, calc(100vh * 1.5), 1536px);
+    width: min(100vw, calc(100dvh * 1.5), 1536px);
     aspect-ratio: 3 / 2;
     overflow: hidden;
     background: #000;
@@ -750,12 +761,12 @@ body {
 
 #mobileControls {
     position: absolute;
-    left: 0;
-    bottom: 3%;
-    width: 100%;
+    left: 50%;
+    bottom: 4%;
+    width: min(90%, 620px);
+    transform: translateX(-50%);
     display: none;
     justify-content: space-between;
-    padding: 0 30px;
     z-index: 80;
     pointer-events: none;
 }
